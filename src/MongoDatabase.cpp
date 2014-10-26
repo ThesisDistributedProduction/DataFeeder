@@ -36,10 +36,14 @@ void MongoDatabase::connect(string connectionString) {
 
 MongoDatareader MongoDatabase::query(MongoPrepairedQuery query) {
 	if( isVerbose ) {
-		cout << "quering database with:" << query.getBSON()->toString() << endl;
+		cout << "quering database with:" << query.getQuery()->toString() << endl;
 	}
 
-	auto_ptr<DBClientCursor> cursor = db->query(query.getCollection( ), *( query.getBSON( ) ));
+
+
+	auto_ptr<DBClientCursor> cursor = db->query(query.getCollection( ), (*query.getQuery()));
+
+	//cursor->
 
 	cout << "Recived: " << cursor->itcount( ) << endl;
 

@@ -3,8 +3,10 @@
 #include <cstddef>
 #include <string>
 
-#include <WinSock2.h>
-
+#if defined(_WIN32)
+	#include <winsock2.h>
+	#include <windows.h>
+#endif
 #include <mongo/client/dbclient.h>
 #include <mongo/bson/bson.h>
 
