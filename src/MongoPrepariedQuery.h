@@ -7,6 +7,7 @@
 class MongoPrepairedQuery {
 public:
 	const std::string COLLECTION = "turbineLog.Turbine3000366Log";
+	const std::string TIME_STAMP_FIELD = "TimeStamp";
 	const std::string FIXED_DATE = "2014-10-18";
 
 	MongoPrepairedQuery(std::string timeFrom, std::string timeTo) {
@@ -16,10 +17,10 @@ public:
 
 
 	std::auto_ptr<mongo::Query> getQuery( ) {
-		mongo::BSONObj json = BSON("TimeStampTurbine" << mongo::GTE << timeStampLow << mongo::LT << timeStampHigh);
+		mongo::BSONObj json = BSON(TIME_STAMP_FIELD << mongo::GTE << timeStampLow << mongo::LT << timeStampHigh);
 		
 		mongo::Query q(json);
-		q.sort("TimeStampTurbine");
+		q.sort(TIME_STAMP_FIELD);
 
 		return std::auto_ptr<mongo::Query>(new mongo::Query(q));
 	}

@@ -4,7 +4,6 @@ using namespace mongo;
 using namespace std;
 
 DBClientConnection MongoDatabase::db;
-
 MongoDatabase *MongoDatabase::instance = NULL;
 bool MongoDatabase::isVerbose = false;
 
@@ -32,15 +31,14 @@ void MongoDatabase::connect(string connectionString) {
 	}
 }
 
-MongoDatareader MongoDatabase::query(MongoPrepairedQuery query) {
+
+//MongoDatareader MongoDatabase::query(MongoPrepairedQuery query) {
+void MongoDatabase::query(MongoPrepairedQuery query, MongoDatareader &reader) {
 	if( isVerbose ) {
 		cout << "quering database with:" << query.getQuery()->toString() << endl;
 	}
 
 	auto_ptr<DBClientCursor> cursor = db.query(query.getCollection( ), (*query.getQuery()));
-
-	cout << "Recived: " << cursor->itcount( ) << endl;
-
-	return MongoDatareader( );
+	reader.processData(cursor);
 }
 

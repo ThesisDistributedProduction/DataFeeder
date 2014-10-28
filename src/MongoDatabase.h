@@ -22,7 +22,7 @@ public:
 	static void setVerbose( bool value );
 
 	void connect(std::string connectionString);
-	MongoDatareader MongoDatabase::query(MongoPrepairedQuery query);
+	void MongoDatabase::query(MongoPrepairedQuery query, MongoDatareader &reader);
 
 private:
 
