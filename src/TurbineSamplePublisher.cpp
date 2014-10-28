@@ -63,7 +63,7 @@ void TurbineSamplePublisher::processData(auto_ptr<mongo::DBClientCursor> cursor)
 
 	auto SLEEP_TIME = chrono::milliseconds(150);
 
-	uint64_t lastTime;
+	uint64_t lastTime = 0;
 
 	while( cursor->more( ) ) {
 		mongo::BSONObj obj = cursor->next( );
