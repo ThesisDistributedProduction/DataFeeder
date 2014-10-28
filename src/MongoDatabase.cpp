@@ -3,9 +3,8 @@
 using namespace mongo;
 using namespace std;
 
-DBClientConnection *db = NULL;
+DBClientConnection MongoDatabase::db;
 
-//Initialize static variables
 MongoDatabase *MongoDatabase::instance = NULL;
 bool MongoDatabase::isVerbose = false;
 
@@ -23,11 +22,10 @@ void MongoDatabase::setVerbose(bool value) {
 
 MongoDatabase::MongoDatabase( ) {
 	mongo::client::initialize( );
-	db = new DBClientConnection;
 }
 
 void MongoDatabase::connect(string connectionString) {
-	db->connect(connectionString);
+	db.connect(connectionString);
 
 	if( isVerbose ) {
 		cout << "Connecting to database: " << connectionString << endl;
@@ -39,11 +37,7 @@ MongoDatareader MongoDatabase::query(MongoPrepairedQuery query) {
 		cout << "quering database with:" << query.getQuery()->toString() << endl;
 	}
 
-
-
-	auto_ptr<DBClientCursor> cursor = db->query(query.getCollection( ), (*query.getQuery()));
-
-	//cursor->
+	auto_ptr<DBClientCursor> cursor = db.query(query.getCollection( ), (*query.getQuery()));
 
 	cout << "Recived: " << cursor->itcount( ) << endl;
 

@@ -7,6 +7,7 @@
 	#include <winsock2.h>
 	#include <windows.h>
 #endif
+
 #include <mongo/client/dbclient.h>
 #include <mongo/bson/bson.h>
 
@@ -16,12 +17,16 @@
 
 class MongoDatabase {
 public:
+	
 	static MongoDatabase *getInstance( );
 	static void setVerbose( bool value );
 
 	void connect(std::string connectionString);
 	MongoDatareader MongoDatabase::query(MongoPrepairedQuery query);
+
 private:
+
+	static mongo::DBClientConnection db;
 	static MongoDatabase *instance;
 	static bool isVerbose;
 
