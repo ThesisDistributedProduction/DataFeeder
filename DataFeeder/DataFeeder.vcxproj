@@ -10,6 +10,24 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\DataInterface\Turbine.h" />
+    <ClInclude Include="..\src\DataInterface\TurbinePlugin.h" />
+    <ClInclude Include="..\src\DataInterface\TurbineSupport.h" />
+    <ClInclude Include="..\src\IncludeMongo.h" />
+    <ClInclude Include="..\src\MongoDatabase.h" />
+    <ClInclude Include="..\src\MongoDatareader.h" />
+    <ClInclude Include="..\src\MongoPrepariedQuery.h" />
+    <ClInclude Include="..\src\TurbineSamplePublisher.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\DataInterface\Turbine.cxx" />
+    <ClCompile Include="..\src\DataInterface\TurbinePlugin.cxx" />
+    <ClCompile Include="..\src\DataInterface\TurbineSupport.cxx" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\MongoDatabase.cpp" />
+    <ClCompile Include="..\src\TurbineSamplePublisher.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C2152448-298E-458C-AAE7-61DC78C79B14}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -63,6 +81,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>nddscppzd.lib;nddsczd.lib;nddscorezd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>"$(NDDSHOME)\ndds.5.1.0\scripts\rtiddsgen.bat" -d $(ProjectDir)\..\src\dataTypes -language c++ -I $(ProjectDir)\..\src\idl\ -inputIdl $(ProjectDir)\..\src\idl\Turbine.idl -replace</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -82,13 +103,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>nddscppz.lib;nddscz.lib;nddscorez.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>"$(NDDSHOME)\ndds.5.1.0\scripts\rtiddsgen.bat" -d $(ProjectDir)\..\src\dataTypes -language c++ -I $(ProjectDir)\..\src\idl\ -inputIdl $(ProjectDir)\..\src\idl\Turbine.idl -replace</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\*.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\src\*.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
