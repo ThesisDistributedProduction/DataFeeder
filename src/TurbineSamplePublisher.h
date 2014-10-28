@@ -9,10 +9,7 @@
 #include "MongoDatareader.h"
 #include "MongoDatabase.h"
 
-
-#include <ndds\ndds_cpp.h>
-#include "DataInterface\TurbineSupport.h"
-
+#include "DDS_Mannager.h"
 
 class TurbineSamplePublisher :
 	public MongoDatareader {
@@ -23,11 +20,7 @@ public:
 
 	~TurbineSamplePublisher( );
 private:
-	DDSDomainParticipant* participant;
-	DDSPublisher *publisher;
-	DDSTopic *topic;
 	TurbineDataWriter *writer;
-	//DDS_InstanceHandle_t handle;
 
 };
 

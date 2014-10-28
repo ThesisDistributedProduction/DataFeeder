@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="DataInterface">
       <UniqueIdentifier>{d6508fc6-a6e0-44b9-8c09-15f8f3d4df49}</UniqueIdentifier>
     </Filter>
@@ -48,6 +44,9 @@
     <ClInclude Include="..\src\DataInterface\TurbineSupport.h">
       <Filter>DataInterface\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\DDS_Mannager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -67,6 +66,9 @@
     </ClCompile>
     <ClCompile Include="..\src\DataInterface\TurbineSupport.cxx">
       <Filter>DataInterface\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\DDS_Mannager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

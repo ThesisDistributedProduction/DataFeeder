@@ -23,6 +23,7 @@
     <ClInclude Include="..\src\MongoDatareader.h" />
     <ClInclude Include="..\src\MongoPrepariedQuery.h" />
     <ClInclude Include="..\src\TurbineSamplePublisher.h" />
+    <ClInclude Include="..\src\DDS_Mannager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DataInterface\Turbine.cxx" />
@@ -31,6 +32,7 @@
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\MongoDatabase.cpp" />
     <ClCompile Include="..\src\TurbineSamplePublisher.cpp" />
+    <ClCompile Include="..\src\DDS_Mannager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C2152448-298E-458C-AAE7-61DC78C79B14}</ProjectGuid>
