@@ -1,10 +1,10 @@
 #include "TurbineSamplePublisher.h"
 
 #define DEFAULT_DOMAIN_ID           0
-#define TOPIC_NAME                  "News Example"
+#define TOPIC_NAME                  "Cluster 1"
 #define WRITER_HANDLE								"SOME_NAME"
 
-
+using namespace std;
 
 TurbineSamplePublisher::TurbineSamplePublisher( ) {
 	auto factory = DDSDomainParticipantFactory::get_instance( );
@@ -16,37 +16,52 @@ TurbineSamplePublisher::TurbineSamplePublisher( ) {
 		DDS_STATUS_MASK_NONE);   // no listener callbacks
 
 	if( participant == NULL ) {
-		throw new std::runtime_error("! Unable to create DomainParticipant");
+		throw new runtime_error("! Unable to create DomainParticipant");
+	}
+
+	publisher = participant->create_publisher(
+		DDS_PUBLISHER_QOS_DEFAULT,
+		NULL,										 // no listener
+		DDS_STATUS_MASK_NONE);	 // no listener callbacks
+	if( publisher == NULL ) {
+		throw runtime_error("create_publisher error");
+	}
+
+	auto retcode = TurbineTypeSupport::register_type(
+		participant, 
+		TurbineTypeSupport::get_type_name( ));
+	if( retcode != DDS_RETCODE_OK ) {
+		throw runtime_error("register_type error " + retcode);
 	}
 
 	topic = participant->create_topic(
 		TOPIC_NAME,
-		DDSKeyedStringTypeSupport::get_type_name( ),
+		TurbineTypeSupport::get_type_name( ),
 		DDS_TOPIC_QOS_DEFAULT,
 		NULL,                    // no listener
 		DDS_STATUS_MASK_NONE);    // no listener callbacks
 	if( topic == NULL ) {
-		throw std::runtime_error("! Unable to create topic");
+		throw runtime_error("! Unable to create topic");
 	}
 
-	DDSDataWriter* dataWriter = participant->create_datawriter(
+	DDSDataWriter *dataWriter = participant->create_datawriter(
 		topic,
 		DDS_DATAWRITER_QOS_DEFAULT,
 		NULL,           /* listener */
 		DDS_STATUS_MASK_NONE);
 	if( dataWriter == NULL ) {
-		throw std::runtime_error("Unable to create DataWriter");
+		throw runtime_error("Unable to create DataWriter");
 	}
 
-	writer = DDSKeyedStringDataWriter::narrow(dataWriter);
+	writer = TurbineDataWriter::narrow(dataWriter);
 
-	handle = writer->register_instance(WRITER_HANDLE);
+//	handle = writer->register_instance(*instance);
 }
 
 
-void TurbineSamplePublisher::processData(std::auto_ptr<mongo::DBClientCursor> cursor) {
+void TurbineSamplePublisher::processData(auto_ptr<mongo::DBClientCursor> cursor) {
 
-	auto SLEEP_TIME = std::chrono::milliseconds(150);
+	auto SLEEP_TIME = chrono::milliseconds(150);
 
 	uint64_t lastTime;
 
@@ -54,23 +69,36 @@ void TurbineSamplePublisher::processData(std::auto_ptr<mongo::DBClientCursor> cu
 		mongo::BSONObj obj = cursor->next( );
 		mongo::Date_t date = obj["TimeStamp"].Date( );
 
-		std::cout << date.toString( ) << "Timestamp: " << date.millis << std::endl;
-		std::cout << "diff: " << date.millis - lastTime << std::endl;
-		//std::cout << date.jsonString(mongo::JsonStringFormat::Strict, false) << std::endl;
-		//std::cout << obj.jsonString(mongo::JsonStringFormat::JS, true, 1) << std::endl;
+		cout << date.toString( ) << "Timestamp: " << date.millis << endl;
+		cout << "diff: " << date.millis - lastTime << endl;
+		//cout << date.jsonString(mongo::JsonStringFormat::Strict, false) << endl;
+		//cout << obj.jsonString(mongo::JsonStringFormat::JS, true, 1) << endl;
 
-		writer->write("Timestamp", date.toString( ).c_str( ), handle);
+		auto instance = auto_ptr<Turbine>(new Turbine());
+		instance->turbineId = obj["Turbine"].numberInt();
+		instance->setPoint = obj["AssignPowerRef"].numberInt();
+		instance->currentProduction = obj["ActivePower"].numberInt( );
+		instance->maxProduction = obj["AvailablePower"].numberInt( );
+
+		DDS_InstanceHandle_t instance_handle = writer->register_instance(*instance);
+
+		writer->write(*instance, instance_handle);
 		lastTime = date.millis;
-		std::this_thread::sleep_for(SLEEP_TIME);
+		this_thread::sleep_for(SLEEP_TIME);
 	}
 
 
 }
 
-//void TurbineSamplePublisher::processData(std::auto_ptr<mongo::DBClientCursor> cursor) {
-//	std::cout << "Recived: " << cursor->itcount( ) << std::endl;
+//void TurbineSamplePublisher::processData(auto_ptr<mongo::DBClientCursor> cursor) {
+//	cout << "Recived: " << cursor->itcount( ) << endl;
 
 //}
 
 
-TurbineSamplePublisher::~TurbineSamplePublisher( ) { }
+TurbineSamplePublisher::~TurbineSamplePublisher( ) {
+	//auto factory = DDSDomainParticipantFactory::get_instance( );
+	//participant->delete_contained_entities( );
+
+	//factory->delete_participant(participant);
+}

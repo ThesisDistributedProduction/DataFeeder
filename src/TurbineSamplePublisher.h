@@ -4,12 +4,14 @@
 #include <thread>
 #include <chrono>
 #include <cstdint>
+#include <cstddef>
 
 #include "MongoDatareader.h"
 #include "MongoDatabase.h"
 
 
 #include <ndds\ndds_cpp.h>
+#include "DataInterface\TurbineSupport.h"
 
 
 class TurbineSamplePublisher :
@@ -22,9 +24,10 @@ public:
 	~TurbineSamplePublisher( );
 private:
 	DDSDomainParticipant* participant;
+	DDSPublisher *publisher;
 	DDSTopic *topic;
-	DDSKeyedStringDataWriter * writer;
-	DDS_InstanceHandle_t handle;
+	TurbineDataWriter *writer;
+	//DDS_InstanceHandle_t handle;
 
 };
 
