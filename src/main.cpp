@@ -1,5 +1,12 @@
 
+#if defined(_WIN32)
+	#include <winsock2.h>
+	#include <Windows.h>
+#endif
+
 #include "MongoDatabase.h"
+#include "TurbineSamplePublisher.h"
+
 
 using namespace std;
 
@@ -12,10 +19,10 @@ int main(int argc, char *argv[]) {
 		db->connect(HOSTNAME);
 		
 		MongoPrepairedQuery query("03:00:00", "04:00:00");
-		MongoDatareader reader;
+		TurbineSamplePublisher reader;
 		db->query(query, reader);
 
-	} catch( const mongo::DBException &e ) {
+	} catch( const std::exception &e ) {
 		cout << "caught " << e.what( ) << endl;
 	}
 

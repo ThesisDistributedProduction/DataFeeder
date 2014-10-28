@@ -1,15 +1,11 @@
 #pragma once
 
 #include <cstddef>
+#pragma once
+
 #include <string>
 
-#if defined(_WIN32)
-	#include <winsock2.h>
-	#include <windows.h>
-#endif
-
-#include <mongo/client/dbclient.h>
-#include <mongo/bson/bson.h>
+#include "IncludeMongo.h"
 
 #include "MongoDatareader.h"
 #include "MongoPrepariedQuery.h"
@@ -22,7 +18,7 @@ public:
 	static void setVerbose( bool value );
 
 	void connect(std::string connectionString);
-	void MongoDatabase::query(MongoPrepairedQuery query, MongoDatareader &reader);
+	void query(MongoPrepairedQuery query, MongoDatareader &reader);
 
 private:
 

@@ -15,7 +15,6 @@ public:
 		timeStampHigh = MakeTime(FIXED_DATE + " " + timeTo + ".000");
 	}
 
-
 	std::auto_ptr<mongo::Query> getQuery( ) {
 		mongo::BSONObj json = BSON(TIME_STAMP_FIELD << mongo::GTE << timeStampLow << mongo::LT << timeStampHigh);
 		
