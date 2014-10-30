@@ -7,6 +7,6 @@
 class MongoDatareader {
 public:
 
-	virtual void processData(std::auto_ptr<mongo::DBClientCursor> cursor) = 0;
+	virtual void giveDataCursor(std::auto_ptr<mongo::DBClientCursor> cursor) = 0;
 
 };

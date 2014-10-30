@@ -3,7 +3,6 @@
 #define DEFAULT_DOMAIN_ID           0
 #define TOPIC_NAME                  "Cluster 1"
 
-
 using namespace std;
 
 DDS_Mannager *DDS_Mannager::instance = NULL;

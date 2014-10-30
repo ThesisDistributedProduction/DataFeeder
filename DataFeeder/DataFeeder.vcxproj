@@ -24,6 +24,7 @@
     <ClInclude Include="..\src\MongoPrepariedQuery.h" />
     <ClInclude Include="..\src\TurbineSamplePublisher.h" />
     <ClInclude Include="..\src\DDS_Mannager.h" />
+    <ClInclude Include="..\src\TurbineExt.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DataInterface\Turbine.cxx" />

@@ -31,14 +31,12 @@ void MongoDatabase::connect(string connectionString) {
 	}
 }
 
-
-//MongoDatareader MongoDatabase::query(MongoPrepairedQuery query) {
-void MongoDatabase::query(MongoPrepairedQuery query, MongoDatareader &reader) {
+void MongoDatabase::query(MongoPrepairedQuery &query, MongoDatareader &reader) {
 	if( isVerbose ) {
-		cout << "quering database with:" << query.getQuery()->toString() << endl;
+		cout << "quering " << query.getCollection( ) <<" with:" << query.getQuery( )->toString( ) << endl;
 	}
 
 	auto_ptr<DBClientCursor> cursor = db.query(query.getCollection( ), (*query.getQuery()));
-	reader.processData(cursor);
+	reader.giveDataCursor(cursor);
 }
 

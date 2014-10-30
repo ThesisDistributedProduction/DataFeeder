@@ -6,11 +6,12 @@
 
 class MongoPrepairedQuery {
 public:
-	const std::string COLLECTION = "turbineLog.Turbine3000366Log";
+	const std::string DB = "turbineLog";
 	const std::string TIME_STAMP_FIELD = "TimeStamp";
 	const std::string FIXED_DATE = "2014-10-18";
 
-	MongoPrepairedQuery(std::string timeFrom, std::string timeTo) {
+	MongoPrepairedQuery(std::string collection, std::string timeFrom, std::string timeTo) {
+		this->collection = collection;
 		timeStampLow = MakeTime(FIXED_DATE + " " + timeFrom + ".000");
 		timeStampHigh = MakeTime(FIXED_DATE + " " + timeTo + ".000");
 	}
@@ -25,7 +26,7 @@ public:
 	}
 
 	std::string getCollection( ) {
-		return COLLECTION;
+		return DB + "." + collection;
 	}
 
 private:
@@ -35,6 +36,7 @@ private:
 		return mongo::Date_t(mktime(&to_tm(time)) * 1000);
 	}
 
+	std::string collection;
 	mongo::Query query;
 	mongo::Date_t timeStampLow;
 	mongo::Date_t timeStampHigh;

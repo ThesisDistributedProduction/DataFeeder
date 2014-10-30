@@ -18,7 +18,7 @@ public:
 	static void setVerbose( bool value );
 
 	void connect(std::string connectionString);
-	void query(MongoPrepairedQuery query, MongoDatareader &reader);
+	void query(MongoPrepairedQuery &query, MongoDatareader &reader);
 
 private:
 
