@@ -1,8 +1,6 @@
 #pragma once
 
 #include <cstddef>
-#pragma once
-
 #include <string>
 
 #include "IncludeMongo.h"
